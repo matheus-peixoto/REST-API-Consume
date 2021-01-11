@@ -1,0 +1,29 @@
+﻿@model DealViewModel
+
+@{
+    ViewData["Title"] = "Create a deal";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Deal.Title" class="control-label"></label>
+                <input asp-for="Deal.Title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Deal.Amount" class="control-label"></label>
+                <input asp-for="Deal.Amount" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Deal.ContactId" class="control-label"></label>
+                <select asp-for="Deal.ContactId" asp-items="@(new SelectList(Model.Contacts, "Id", "Name"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default bg-color-blue">Create!</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn-default {
+    background-color: #23b7e5;
+    color: #fff;
+}
+
+/* Classes utilitárias */
+.font-size-18px {
+    font-size: 18px;
+}
+
+.font-size-22px {
+    font-size: 22px;
+}
+
+.bg-color-purple {
+    background-color: #786fb1;
+}
+
+.bg-color-blue {
+    background-color: #23b7e5;
+}
+
+.color-white {
+    color: #fff !important;
+}

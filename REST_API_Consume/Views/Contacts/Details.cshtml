@@ -1,0 +1,44 @@
+﻿@model ContactViewModel
+
+@{
+    Deal deal = new Deal();
+    ViewData["Title"] = "Contact details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal font-size-22px">
+        <dt>@Html.DisplayNameFor(m => Model.Contact.Name)</dt>
+        <dd>@Html.DisplayFor(m => Model.Contact.Name)</dd>
+    </dl>
+</div>
+
+<h3>Contact Deals</h3>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="bg-color-purple color-white">
+            <th>@Html.DisplayNameFor(m => deal.Title)</th>
+            <th>@Html.DisplayNameFor(m => deal.Amount)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Deal item in Model.Deals)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Title)</td>
+                <td>@Html.DisplayFor(m => item.Amount)</td>
+                <td>
+                    <a asp-controller="Deals" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="Deals" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-controller="Deals" asp-action="Win" asp-route-dealId="@item.Id"> Win deal</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<a asp-controller="Deals" asp-action="Create" asp-route-id="@Model.Contact.Id" class="btn btn-default bg-color-blue"> Create a new deal</a>
