@@ -9,11 +9,11 @@ namespace REST_API_Consume.Controllers
 {
     public class TasksController : Controller
     {
-        private PloomesAPIServices _ploomesApi;
+        private PloomesAPIRepository _ploomesApiRepo;
 
-        public TasksController(PloomesAPIServices ploomesApi)
+        public TasksController(PloomesAPIRepository ploomesApiRepo)
         {
-            _ploomesApi = ploomesApi;
+            _ploomesApiRepo = ploomesApiRepo;
         }
 
         public IActionResult Create(int dealId, int contactId)
@@ -28,16 +28,16 @@ namespace REST_API_Consume.Controllers
             if (!ModelState.IsValid)
                 return NotFound();
 
-            await _ploomesApi.CreateTaskAsync(task);
+            await _ploomesApiRepo.CreateTaskAsync(task);
 
             return RedirectToAction("Details", "Deals", new { Id = task.DealId });
         }
 
         public async Task<IActionResult> Finish(int id)
         {
-            Models.Task task = await _ploomesApi.FindTaskByIdAsync(id);
+            Models.Task task = await _ploomesApiRepo.FindTaskByIdAsync(id);
 
-            await _ploomesApi.FinishTaskAsync(task);
+            await _ploomesApiRepo.FinishTaskAsync(task);
 
             return RedirectToAction("Details", "Deals", new { Id = task.DealId });
         }

@@ -8,19 +8,19 @@ namespace REST_API_Consume.Controllers
 {
     public class ContactsController : Controller
     {
-        private PloomesAPIServices _ploomesApi;
+        private PloomesAPIRepository _ploomesApiRepo;
 
-        public ContactsController(PloomesAPIServices ploomesApi)
+        public ContactsController(PloomesAPIRepository ploomesApiRepo)
         {
-            _ploomesApi = ploomesApi;
+            _ploomesApiRepo = ploomesApiRepo;
         }
 
         public async Task<IActionResult> Details(int id)
         {
             ContactViewModel viewModel = new ContactViewModel()
             {
-                Contact = await _ploomesApi.FindContacByIdtAsync(id),
-                Deals = await _ploomesApi.FindAllContactDealsAsync(id)
+                Contact = await _ploomesApiRepo.FindContacByIdtAsync(id),
+                Deals = await _ploomesApiRepo.FindAllContactDealsAsync(id)
             };
 
             return View(viewModel);
@@ -37,7 +37,7 @@ namespace REST_API_Consume.Controllers
             if (!ModelState.IsValid)
                 return View(contact);
 
-            await _ploomesApi.CreateContactAsync(contact);
+            await _ploomesApiRepo.CreateContactAsync(contact);
 
             return RedirectToAction("Index", "Home");
         }

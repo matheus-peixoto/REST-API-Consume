@@ -34,7 +34,7 @@ namespace REST_API_Consume
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped(options =>
             {
-                return new PloomesAPIServices(client =>
+                return new PloomesAPIRepository(client =>
                 {
                     client.DefaultRequestHeaders.Add(Configuration.GetValue<string>("PloomesAPI:HeaderName"), Configuration.GetValue<string>("PloomesAPI:HeaderValue"));
                     client.BaseAddress = new Uri("https://api2.ploomes.com/");

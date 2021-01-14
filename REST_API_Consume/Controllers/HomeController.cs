@@ -11,16 +11,16 @@ namespace REST_API_Consume.Controllers
 {
     public class HomeController : Controller
     {
-        private PloomesAPIServices _ploomesApi;
+        private PloomesAPIRepository _ploomesApiRepo;
 
-        public HomeController(PloomesAPIServices ploomesApi)
+        public HomeController(PloomesAPIRepository ploomesApiRepo)
         {
-            _ploomesApi = ploomesApi;
+            _ploomesApiRepo = ploomesApiRepo;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<Contact> contacts = await _ploomesApi.FindAllContactsAsync();
+            List<Contact> contacts = await _ploomesApiRepo.FindAllContactsAsync();
             return View(contacts);
         }
     }

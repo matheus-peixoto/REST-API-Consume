@@ -10,11 +10,11 @@ namespace REST_API_Consume.Controllers
 {
     public class InteractionsRecordsController : Controller
     {
-        private PloomesAPIServices _ploomesApi;
+        private PloomesAPIRepository _ploomesApiRepo;
 
-        public InteractionsRecordsController(PloomesAPIServices ploomesApi)
+        public InteractionsRecordsController(PloomesAPIRepository ploomesApiRepo)
         {
-            _ploomesApi = ploomesApi;
+            _ploomesApiRepo = ploomesApiRepo;
         }
 
         public IActionResult Create(int id)
@@ -30,7 +30,7 @@ namespace REST_API_Consume.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            await _ploomesApi.CreateInteractionRecordAsync(interactionRecord);
+            await _ploomesApiRepo.CreateInteractionRecordAsync(interactionRecord);
 
             return RedirectToAction("Index", "Home");
         }

@@ -11,16 +11,16 @@ namespace REST_API_Consume.Controllers
 {
     public class DealsController : Controller
     {
-        private PloomesAPIServices _ploomesApi;
+        private PloomesAPIRepository _ploomesApiRepo;
 
-        public DealsController(PloomesAPIServices ploomesApi)
+        public DealsController(PloomesAPIRepository ploomesApiRepo)
         {
-            _ploomesApi = ploomesApi;
+            _ploomesApiRepo = ploomesApiRepo;
         }
 
         public async Task<IActionResult> Create()
         {
-            DealViewModel viewModel = new DealViewModel() { Contacts = await _ploomesApi.FindAllContactsAsync() };
+            DealViewModel viewModel = new DealViewModel() { Contacts = await _ploomesApiRepo.FindAllContactsAsync() };
 
             return View(viewModel);
         }
@@ -30,19 +30,18 @@ namespace REST_API_Consume.Controllers
         {
             if (!ModelState.IsValid)
             {
-                DealViewModel viewModel = new DealViewModel() { Contacts = await _ploomesApi.FindAllContactsAsync() };
+                DealViewModel viewModel = new DealViewModel() { Contacts = await _ploomesApiRepo.FindAllContactsAsync() };
                 return View(viewModel);
             }
 
-            await _ploomesApi.CreateDealAsync(deal);
+            await _ploomesApiRepo.CreateDealAsync(deal);
 
             return RedirectToAction("Details", "Contacts", new { Id = deal.ContactId });
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            Deal deal = await _ploomesApi.FindDealByIdAsync(id);
-            Console.WriteLine();
+            Deal deal = await _ploomesApiRepo.FindDealByIdAsync(id);
             return View(deal);
         }
 
@@ -52,7 +51,7 @@ namespace REST_API_Consume.Controllers
             if (!ModelState.IsValid)
                 return View(deal.Id);
 
-            await _ploomesApi.UpdateDealAsync(deal);
+            await _ploomesApiRepo.UpdateDealAsync(deal);
 
             return RedirectToAction("Details", "Contacts", new { Id = deal.ContactId });
         }
@@ -61,8 +60,8 @@ namespace REST_API_Consume.Controllers
         {
             DealViewModel viewModel = new DealViewModel()
             {
-                Deal = await _ploomesApi.FindDealByIdAsync(id),
-                DealTasks = await _ploomesApi.FindAllDealTasksAsync(id)
+                Deal = await _ploomesApiRepo.FindDealByIdAsync(id),
+                DealTasks = await _ploomesApiRepo.FindAllDealTasksAsync(id)
             };
 
             return View(viewModel);
@@ -70,9 +69,9 @@ namespace REST_API_Consume.Controllers
 
         public async Task<IActionResult> Win(int dealId)
         {
-            Deal deal = await _ploomesApi.FindDealByIdAsync(dealId);
-            await _ploomesApi.WinDealAsync(deal);
-            await _ploomesApi.CreateInteractionRecordAsync(new InteractionRecord() { ContactId = deal.ContactId, Content = "Negócio fechado!" });
+            Deal deal = await _ploomesApiRepo.FindDealByIdAsync(dealId);
+            await _ploomesApiRepo.WinDealAsync(deal);
+            await _ploomesApiRepo.CreateInteractionRecordAsync(new InteractionRecord() { ContactId = deal.ContactId, Content = "Negócio fechado!" });
 
             return RedirectToAction("Index", "Home");
         }
